@@ -1,0 +1,6 @@
+=== CINEMA TICKET ===
+Film  : Interstellar
+Jam   : 10:20
+Kursi : B2
+User  : guest
+=====================
