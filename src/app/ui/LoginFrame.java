@@ -14,17 +14,15 @@ public class LoginFrame extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // HEADER
         JPanel header = new JPanel();
         header.setBackground(new Color(33, 37, 41));
-        JLabel title = new JLabel("XXI SYSTEM LOGIN");
+        JLabel title = new JLabel("LUMINA SYSTEM LOGIN");
         title.setForeground(Color.WHITE);
         title.setFont(new Font("SansSerif", Font.BOLD, 20));
         header.add(title);
         header.setBorder(new EmptyBorder(15,0,15,0));
         add(header, BorderLayout.NORTH);
 
-        // FORM PANEL
         JPanel formPanel = new JPanel(new GridLayout(2, 2, 10, 20));
         formPanel.setBorder(new EmptyBorder(30, 40, 30, 40));
 
@@ -35,10 +33,9 @@ public class LoginFrame extends JFrame {
         formPanel.add(new JLabel("Password:")); formPanel.add(passTxt);
         add(formPanel, BorderLayout.CENTER);
 
-        // BUTTON PANEL
         JPanel btnPanel = new JPanel();
         JButton btnLogin = new JButton("MASUK");
-        btnLogin.setBackground(new Color(13, 110, 253)); // Bootstrap Blue
+        btnLogin.setBackground(new Color(13, 110, 253));
         btnLogin.setForeground(Color.WHITE);
         btnLogin.setPreferredSize(new Dimension(300, 40));
 
