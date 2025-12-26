@@ -63,7 +63,7 @@ Run: Jalankan file src/app/Main.java.
 ## 🔑 Akun Default
 Gunakan akun berikut untuk masuk:
 | Role  | Username    | Password | Akses                   |
-| :---  | :---:       | ---:     | |---:                   |
+| ---:  | ---:        | ---:     | ---:                    |
 | Admin | admin       | admin    | Full CRUD, Reset System |
 | Guest | guest       | guest    | Booking Tiket, History  |
 
