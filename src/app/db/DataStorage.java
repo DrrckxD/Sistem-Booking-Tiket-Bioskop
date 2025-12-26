@@ -16,20 +16,21 @@ public class DataStorage {
     static {
         users.add(new User("admin", "admin", "ADMIN"));
         users.add(new User("guest", "guest", "GUEST"));
+
+
+        File f = new File(FILE_SCHEDULES);
+        if(!f.exists()) {
+        }
     }
+
 
     public static void saveData() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_SCHEDULES))) {
             oos.writeObject(schedules);
-        } catch (IOException e) {
-            System.out.println("Gagal menyimpan jadwal: " + e.getMessage());
-        }
-
+        } catch (IOException e) { e.printStackTrace(); }
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_TICKETS))) {
             oos.writeObject(tickets);
-        } catch (IOException e) {
-            System.out.println("Gagal menyimpan tiket: " + e.getMessage());
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     @SuppressWarnings("unchecked")
@@ -38,18 +39,13 @@ public class DataStorage {
         if (fSch.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fSch))) {
                 schedules = (List<Showtime>) ois.readObject();
-            } catch (Exception e) {
-                System.out.println("File jadwal rusak/baru: " + e.getMessage());
-            }
+            } catch (Exception e) {}
         }
-
         File fTic = new File(FILE_TICKETS);
         if (fTic.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fTic))) {
                 tickets = (List<Ticket>) ois.readObject();
-            } catch (Exception e) {
-                System.out.println("File tiket rusak/baru: " + e.getMessage());
-            }
+            } catch (Exception e) {}
         }
     }
 }

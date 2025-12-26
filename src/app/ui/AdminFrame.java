@@ -12,28 +12,29 @@ public class AdminFrame extends JFrame {
     private DefaultTableModel tableModel;
     private JTable table;
 
-    JTextField txtTitle = new JTextField();
-    JTextField txtTime = new JTextField();
-    JTextField txtPrice = new JTextField();
-    JTextField txtImage = new JTextField();
+    JTextField txtTitle = new JTextField(20);
+    JTextField txtTime = new JTextField(10);
+    JTextField txtPrice = new JTextField(15);
+    JTextField txtImage = new JTextField(20);
+    JTextField txtDuration = new JTextField(10);
+    JTextField txtCast = new JTextField(30);
+    JTextArea txtSynopsis = new JTextArea(4, 20);
+
+    JCheckBox chkMultiAdd = new JCheckBox("Mode Input Banyak Jam");
 
     public AdminFrame() {
         setTitle("Dashboard Administrator");
-        setSize(800, 600);
+        setSize(950, 750);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
         JPanel header = new JPanel();
         header.setBackground(new Color(192, 57, 43));
-        JLabel lblHeader = new JLabel("KELOLA DATA FILM & JADWAL");
-        lblHeader.setForeground(Color.WHITE);
-        lblHeader.setFont(new Font("SansSerif", Font.BOLD, 18));
-        header.add(lblHeader);
-        header.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        header.add(new JLabel("<html><h2 style='color:white'>KELOLA DATA FILM & JADWAL</h2></html>"));
         add(header, BorderLayout.NORTH);
 
-        String[] columns = {"Judul Film", "Jam Tayang", "Harga", "File Gambar"};
+        String[] columns = {"Judul Film", "Jam", "Harga", "Durasi"};
         tableModel = new DefaultTableModel(columns, 0);
         table = new JTable(tableModel);
         table.setRowHeight(25);
@@ -43,99 +44,174 @@ public class AdminFrame extends JFrame {
         scrollPane.setBorder(BorderFactory.createTitledBorder("Daftar Film Aktif"));
         add(scrollPane, BorderLayout.CENTER);
 
-        JPanel inputPanel = new JPanel(new GridLayout(5, 2, 10, 10));
-        inputPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(Color.GRAY), "Form Kelola Jadwal", TitledBorder.LEFT, TitledBorder.TOP));
+        JPanel inputPanel = new JPanel(new GridBagLayout());
+        inputPanel.setBorder(BorderFactory.createTitledBorder("Form Data Film"));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        inputPanel.add(new JLabel("Judul Film:")); inputPanel.add(txtTitle);
-        inputPanel.add(new JLabel("Waktu (HH:MM):")); inputPanel.add(txtTime);
-        inputPanel.add(new JLabel("Harga Tiket:")); inputPanel.add(txtPrice);
+        gbc.gridx=0; gbc.gridy=0; inputPanel.add(new JLabel("Judul:"), gbc);
+        gbc.gridx=1; gbc.weightx=1.0; inputPanel.add(txtTitle, gbc);
+        gbc.gridx=2; gbc.weightx=0; inputPanel.add(new JLabel("Jam:"), gbc);
+        gbc.gridx=3; gbc.weightx=0.3; inputPanel.add(txtTime, gbc);
 
-        JPanel imgContainer = new JPanel(new BorderLayout());
+        gbc.gridx=0; gbc.gridy=1; inputPanel.add(new JLabel("Harga:"), gbc);
+        gbc.gridx=1; inputPanel.add(txtPrice, gbc);
+        gbc.gridx=2; inputPanel.add(new JLabel("Durasi:"), gbc);
+        gbc.gridx=3; inputPanel.add(txtDuration, gbc);
+
+        gbc.gridx=0; gbc.gridy=2; inputPanel.add(new JLabel("Cast:"), gbc);
+        gbc.gridx=1; gbc.gridwidth=3; inputPanel.add(txtCast, gbc);
+
+        gbc.gridx=0; gbc.gridy=3; gbc.gridwidth=1; inputPanel.add(new JLabel("Gambar:"), gbc);
+        JPanel imgContainer = new JPanel(new BorderLayout(5,0));
         imgContainer.add(txtImage, BorderLayout.CENTER);
         JButton btnBrowse = new JButton("...");
         btnBrowse.addActionListener(e -> browseImage());
         imgContainer.add(btnBrowse, BorderLayout.EAST);
+        gbc.gridx=1; gbc.gridwidth=3; inputPanel.add(imgContainer, gbc);
 
-        inputPanel.add(new JLabel("Path Gambar:")); inputPanel.add(imgContainer);
+        gbc.gridx=0; gbc.gridy=4; gbc.gridwidth=1; gbc.anchor = GridBagConstraints.NORTHWEST;
+        inputPanel.add(new JLabel("Sinopsis:"), gbc);
+        gbc.gridx=1; gbc.gridwidth=3; inputPanel.add(new JScrollPane(txtSynopsis), gbc);
+
+        gbc.gridx=1; gbc.gridy=5; gbc.gridwidth=3; inputPanel.add(chkMultiAdd, gbc);
 
         JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton btnAdd = new JButton("Tambah");
-        JButton btnEdit = new JButton("Edit");
+        JButton btnAdd = new JButton("Simpan");
+        JButton btnClear = new JButton("Bersihkan");
+        JButton btnEdit = new JButton("Update");
         JButton btnDel = new JButton("Hapus");
-        JButton btnLogout = new JButton("Logout");
 
-        btnAdd.setBackground(new Color(40, 167, 69)); btnAdd.setForeground(Color.WHITE);
-        btnEdit.setBackground(new Color(255, 193, 7)); btnEdit.setForeground(Color.BLACK);
-        btnDel.setBackground(new Color(220, 53, 69)); btnDel.setForeground(Color.WHITE);
+        JButton btnResetTickets = new JButton("RESET TIKET");
+        JButton btnResetAll = new JButton("RESET DB");
+        JButton btnLogout = new JButton("LOGOUT");
 
-        actionPanel.add(btnAdd); actionPanel.add(btnEdit); actionPanel.add(btnDel); actionPanel.add(btnLogout);
+        styleButton(btnAdd, new Color(40, 167, 69));
+        styleButton(btnClear, Color.GRAY);
+        styleButton(btnEdit, new Color(255, 193, 7));
+        styleButton(btnDel, new Color(220, 53, 69));
 
-        JPanel bottomContainer = new JPanel(new BorderLayout());
-        bottomContainer.add(inputPanel, BorderLayout.CENTER);
-        bottomContainer.add(actionPanel, BorderLayout.SOUTH);
-        bottomContainer.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        add(bottomContainer, BorderLayout.SOUTH);
+        btnResetTickets.setBackground(new Color(255, 140, 0));
+        btnResetTickets.setForeground(Color.WHITE);
+        btnResetTickets.setFocusPainted(false);
+
+        btnResetAll.setBackground(Color.BLACK);
+        btnResetAll.setForeground(Color.RED);
+        btnResetAll.setFocusPainted(false);
+
+
+        btnLogout.setBackground(new Color(52, 73, 94));
+        btnLogout.setForeground(Color.WHITE);
+        btnLogout.setFocusPainted(false);
+
+        actionPanel.add(btnAdd); actionPanel.add(btnClear);
+        actionPanel.add(btnEdit); actionPanel.add(btnDel);
+        actionPanel.add(Box.createHorizontalStrut(15));
+        actionPanel.add(btnResetTickets);
+        actionPanel.add(btnResetAll);
+        actionPanel.add(Box.createHorizontalStrut(15));
+        actionPanel.add(btnLogout);
+
+        JPanel bottom = new JPanel(new BorderLayout());
+        bottom.add(inputPanel, BorderLayout.CENTER);
+        bottom.add(actionPanel, BorderLayout.SOUTH);
+        add(bottom, BorderLayout.SOUTH);
+
 
         btnAdd.addActionListener(e -> {
             try {
-                String t = txtTitle.getText();
-                String jam = txtTime.getText();
-                int hrg = Integer.parseInt(txtPrice.getText());
-                String img = txtImage.getText();
-                if(img.isEmpty()) img = "placeholder.png";
-
-                DataStorage.schedules.add(new Showtime(t, jam, hrg, img));
+                String img = txtImage.getText().isEmpty() ? "placeholder.png" : txtImage.getText();
+                Showtime s = new Showtime(
+                        txtTitle.getText(), txtTime.getText(), Integer.parseInt(txtPrice.getText()),
+                        img, txtSynopsis.getText(), txtDuration.getText(), txtCast.getText()
+                );
+                DataStorage.schedules.add(s);
                 DataStorage.saveData();
                 refreshTable();
-                clearForm();
-            } catch (Exception ex) { JOptionPane.showMessageDialog(this, "Harga harus angka!"); }
+
+                if(chkMultiAdd.isSelected()) {
+                    txtTime.setText(""); txtTime.requestFocus();
+                } else {
+                    clearForm();
+                }
+                JOptionPane.showMessageDialog(this, "Berhasil disimpan!");
+            } catch (Exception ex) { JOptionPane.showMessageDialog(this, "Cek input!"); }
         });
 
         btnEdit.addActionListener(e -> {
-            int row = table.getSelectedRow();
-            if(row != -1) {
-                Showtime s = DataStorage.schedules.get(row);
+            int r = table.getSelectedRow();
+            if(r != -1) {
                 try {
-                    s.setTitle(txtTitle.getText());
-                    s.setTime(txtTime.getText());
-                    s.setPrice(Integer.parseInt(txtPrice.getText()));
-                    s.setImagePath(txtImage.getText());
-
+                    Showtime s = new Showtime(
+                            txtTitle.getText(), txtTime.getText(), Integer.parseInt(txtPrice.getText()),
+                            txtImage.getText(), txtSynopsis.getText(), txtDuration.getText(), txtCast.getText()
+                    );
+                    DataStorage.schedules.set(r, s);
                     DataStorage.saveData();
                     refreshTable();
-                    JOptionPane.showMessageDialog(this, "Data berhasil diupdate!");
-                    clearForm();
-                } catch(Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Pastikan format input benar!");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Pilih baris yang ingin diedit dulu!");
+                    JOptionPane.showMessageDialog(this, "Updated!");
+                    if(!chkMultiAdd.isSelected()) clearForm();
+                } catch(Exception ex) {}
             }
         });
 
         table.getSelectionModel().addListSelectionListener(e -> {
-            int row = table.getSelectedRow();
-            if(row != -1) {
-                Showtime s = DataStorage.schedules.get(row);
-                txtTitle.setText(s.getTitle());
-                txtTime.setText(s.getTime());
-                txtPrice.setText(String.valueOf(s.getPrice()));
-                txtImage.setText(s.getImagePath());
+            int r = table.getSelectedRow();
+            if(r != -1) {
+                Showtime s = DataStorage.schedules.get(r);
+                txtTitle.setText(s.getTitle()); txtTime.setText(s.getTime());
+                txtPrice.setText(s.getPrice()+""); txtImage.setText(s.getImagePath());
+                txtDuration.setText(s.getDuration()); txtCast.setText(s.getCast());
+                txtSynopsis.setText(s.getSynopsis());
             }
         });
 
         btnDel.addActionListener(e -> {
-            int row = table.getSelectedRow();
-            if(row != -1) {
-                DataStorage.schedules.remove(row);
+            int r = table.getSelectedRow();
+            if(r != -1) {
+                DataStorage.schedules.remove(r);
                 DataStorage.saveData();
                 refreshTable();
                 clearForm();
             }
         });
 
-        btnLogout.addActionListener(e -> { new LoginFrame(); dispose(); });
+        btnClear.addActionListener(e -> clearForm());
+
+        btnResetTickets.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Hapus SEMUA RIWAYAT TIKET? Kursi akan kosong kembali.",
+                    "Reset Tiket", JOptionPane.YES_NO_OPTION);
+            if(confirm == JOptionPane.YES_OPTION) {
+                DataStorage.tickets.clear();
+                for(Showtime s : DataStorage.schedules) s.seats = new boolean[5][5];
+                DataStorage.saveData();
+                JOptionPane.showMessageDialog(this, "Kursi berhasil dikosongkan!");
+            }
+        });
+
+        btnResetAll.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "PERINGATAN: Hapus SEMUA DATA (Film & Tiket)?",
+                    "Reset Database Total", JOptionPane.YES_NO_OPTION);
+            if(confirm == JOptionPane.YES_OPTION) {
+                DataStorage.schedules.clear();
+                DataStorage.tickets.clear();
+                File f1 = new File("data_jadwal.dat");
+                File f2 = new File("data_tiket.dat");
+                if(f1.exists()) f1.delete();
+                if(f2.exists()) f2.delete();
+                DataStorage.saveData();
+                refreshTable();
+                clearForm();
+                JOptionPane.showMessageDialog(this, "Aplikasi telah di-reset total.");
+            }
+        });
+
+        btnLogout.addActionListener(e -> {
+            new LoginFrame();
+            dispose();
+        });
 
         setVisible(true);
     }
@@ -148,14 +224,19 @@ public class AdminFrame extends JFrame {
     }
 
     private void clearForm() {
-        txtTitle.setText(""); txtTime.setText(""); txtPrice.setText(""); txtImage.setText("");
+        txtTitle.setText(""); txtTime.setText(""); txtPrice.setText("");
+        txtImage.setText(""); txtDuration.setText(""); txtCast.setText(""); txtSynopsis.setText("");
         table.clearSelection();
     }
 
     private void refreshTable() {
         tableModel.setRowCount(0);
         for(Showtime s : DataStorage.schedules) {
-            tableModel.addRow(new Object[]{s.getTitle(), s.getTime(), "Rp " + s.getPrice(), s.getImagePath()});
+            tableModel.addRow(new Object[]{s.getTitle(), s.getTime(), "Rp " + s.getPrice(), s.getDuration()});
         }
+    }
+
+    private void styleButton(JButton btn, Color c) {
+        btn.setBackground(c); btn.setForeground(Color.WHITE); btn.setFocusPainted(false);
     }
 }
