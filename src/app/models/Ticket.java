@@ -16,7 +16,7 @@ public class Ticket implements Serializable {
     public String getOwner() { return owner; }
 
     public void printTxT() {
-        try (PrintWriter pw = new PrintWriter(new FileWriter("Tiket_" + owner + "_" + seat + ".txt"))) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter("Tiket" + owner + "" + seat + ".txt"))) {
             pw.println("=== CINEMA TICKET ===");
             pw.println("Film  : " + movie);
             pw.println("Jam   : " + time);
