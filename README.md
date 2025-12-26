@@ -1,4 +1,4 @@
-# 🎬 Sistem Ticketing Bioskop (LUMINA Cinema)
+# 🎬 Sistem Ticketing Bioskop (ABSOLUTE CINEMA)
 Aplikasi desktop berbasis Java Swing untuk simulasi pemesanan tiket bioskop. Aplikasi ini mencakup fitur manajemen untuk Admin (CRUD Film & Jadwal) dan antarmuka pemesanan visual untuk Guest (Pilih Kursi & Cetak Tiket).
 Dibangun menggunakan Java Murni tanpa database eksternal (menggunakan Java Serialization), sehingga mudah dijalankan di mana saja tanpa konfigurasi server.
 
