@@ -39,14 +39,16 @@ Sistem-Ticketing-Bioskop/
 │       │   ├── User.java           # Class objek untuk Pengguna (Admin/Guest)
 │       │   ├── Showtime.java       # Class objek untuk Jadwal Film & Kursi
 │       │   └── Ticket.java         # Class objek untuk Tiket & Cetak Struk
-│       └── ui/
-│           ├── LoginFrame.java     # GUI Halaman Login
-│           ├── AdminFrame.java     # GUI Dashboard Admin (CRUD Film)
-│           └── GuestFrame.java     # GUI Dashboard Guest (Booking Kursi)
-├── logo.png                        # (Opsional) File logo bioskop
+│       ├── ui/
+│       │   ├── LoginFrame.java     # GUI Halaman Login
+│       |   ├── AdminFrame.java     # GUI Dashboard Admin (CRUD Film)
+│       |   └── GuestFrame.java     # GUI Dashboard Guest (Booking Kursi)
+|       |
+|       └── source/                 #Untuk file gambar
+|      
 ├── data_jadwal.dat                 # File database jadwal (Otomatis dibuat sistem)
 ├── data_tiket.dat                  # File database tiket (Otomatis dibuat sistem)
-└── README.md                       # Dokumentasi proyek
+└── README.md                     
 ```
 
 ##🚀 Cara Menjalankan Aplikasi
