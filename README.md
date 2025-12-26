@@ -44,7 +44,7 @@ Sistem-Ticketing-Bioskop/
 │       |   ├── AdminFrame.java     # GUI Dashboard Admin (CRUD Film)
 │       |   └── GuestFrame.java     # GUI Dashboard Guest (Booking Kursi)
 |       |
-|       └── source/                 #Untuk file gambar
+|       └── source/                 # Untuk file gambar
 |      
 ├── data_jadwal.dat                 # File database jadwal (Otomatis dibuat sistem)
 ├── data_tiket.dat                  # File database tiket (Otomatis dibuat sistem)
